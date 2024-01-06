@@ -18,7 +18,7 @@ const mongodbUri = process.env.MONGODB_URI; // MongoDB URI
 const start = async () => {
     try {
         // Try to connect to mongodb
-        await mongoose.connect(mongodbUri);
+        const connect = await mongoose.connect(mongodbUri);
         console.log('Connected to mongodb');
 
         // Create express app
@@ -28,8 +28,9 @@ const start = async () => {
         app.get('/', (req, res) => {
             res.json({
                 message: 'Server is running',
-                href: 'https://fb.com/zit-software'
-            })
+                href: 'https://fb.com/zit-software',
+                database: connect.connection.db.databaseName,
+            });
         })
 
         // Start server
